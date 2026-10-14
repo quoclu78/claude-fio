@@ -1,0 +1,375 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Portrait of Claude Code</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&display=swap">
+<style>
+  /* Layout: a single framed portrait "photo" centered on a soft studio ground,
+     with a gallery label plate below. Portrait is fixed-palette inline SVG; the
+     page chrome (ground, frame, mat, label) is theme-aware via tokens. */
+  :root {
+    --ground-1: #ece7e1;      /* warm neutral page ground, top */
+    --ground-2: #ded6cd;      /* warm neutral page ground, bottom */
+    --frame: #2b2622;         /* portrait frame */
+    --mat: #f7f4ef;           /* inner mat around the photo */
+    --mat-edge: #e3dcd2;      /* mat bevel */
+    --fg: #2a2420;            /* primary text */
+    --muted: #7c7268;         /* secondary text */
+    --hair-rule: #cfc5b8;     /* divider on label plate */
+    --accent: #cc7a57;        /* terracotta accent */
+    --plate: #faf8f4;         /* label plate fill */
+    --plate-edge: #e6ddd2;
+    --shadow: rgba(60,45,35,0.28);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground-1: #241f1c;
+      --ground-2: #16120f;
+      --frame: #0d0b09;
+      --mat: #201b17;
+      --mat-edge: #2e2822;
+      --fg: #f1e9e0;
+      --muted: #a79a8c;
+      --hair-rule: #3a332c;
+      --accent: #e08a63;
+      --plate: #1c1814;
+      --plate-edge: #2c261f;
+      --shadow: rgba(0,0,0,0.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground-1: #241f1c;
+    --ground-2: #16120f;
+    --frame: #0d0b09;
+    --mat: #201b17;
+    --mat-edge: #2e2822;
+    --fg: #f1e9e0;
+    --muted: #a79a8c;
+    --hair-rule: #3a332c;
+    --accent: #e08a63;
+    --plate: #1c1814;
+    --plate-edge: #2c261f;
+    --shadow: rgba(0,0,0,0.5);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(120% 90% at 50% 18%, var(--ground-1), var(--ground-2));
+    color: var(--fg);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100%;
+  }
+
+  .stage {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: clamp(28px, 7vw, 72px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(18px, 3vw, 28px);
+  }
+
+  .piece {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* --- The framed photo --- */
+  .frame {
+    background: var(--frame);
+    padding: clamp(10px, 3vw, 16px);
+    border-radius: 6px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.06) inset,
+      0 22px 48px -18px var(--shadow),
+      0 4px 14px -6px var(--shadow);
+  }
+  .mat {
+    background: var(--mat);
+    padding: clamp(14px, 4.5vw, 26px);
+    border-radius: 2px;
+    box-shadow:
+      0 0 0 1px var(--mat-edge),
+      0 1px 2px rgba(0,0,0,0.12) inset;
+  }
+  .photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1px;
+    box-shadow: 0 2px 10px -2px rgba(0,0,0,0.35);
+  }
+
+  /* --- Gallery label plate --- */
+  .plate {
+    background: var(--plate);
+    border: 1px solid var(--plate-edge);
+    border-radius: 4px;
+    padding: clamp(14px, 4vw, 20px) clamp(16px, 5vw, 24px);
+    box-shadow: 0 6px 20px -14px var(--shadow);
+  }
+  .plate .eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .plate h1 {
+    font-family: "Fraunces", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 6vw, 1.95rem);
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .plate .sub {
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: clamp(0.92rem, 3.6vw, 1.02rem);
+    margin: 4px 0 0;
+  }
+  .plate hr {
+    border: none;
+    border-top: 1px solid var(--hair-rule);
+    margin: 14px 0;
+  }
+  .plate .note {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0;
+    max-width: 60ch;
+  }
+  .plate .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 12px 0 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .plate .meta span { white-space: nowrap; }
+  .plate .meta b {
+    color: var(--fg);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+</style>
+
+<div class="stage">
+  <figure class="piece" style="margin:0;">
+    <div class="frame">
+      <div class="mat">
+        <svg class="photo" viewBox="0 0 560 680" role="img"
+             aria-label="Stylized vector portrait of an imagined, approachable person representing Claude Code, shown from the chest up with a slight warm smile.">
+          <defs>
+            <!-- studio backdrop -->
+            <radialGradient id="bg" cx="50%" cy="34%" r="78%">
+              <stop offset="0%"  stop-color="#4a5a63"/>
+              <stop offset="52%" stop-color="#36444d"/>
+              <stop offset="100%" stop-color="#232d34"/>
+            </radialGradient>
+            <!-- warm terracotta ambient glow (the AI cue) -->
+            <radialGradient id="glow" cx="50%" cy="42%" r="50%">
+              <stop offset="0%"  stop-color="#e8946b" stop-opacity="0.72"/>
+              <stop offset="45%" stop-color="#d1795a" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#d1795a" stop-opacity="0"/>
+            </radialGradient>
+            <!-- skin shading -->
+            <linearGradient id="skin" x1="30%" y1="8%" x2="78%" y2="100%">
+              <stop offset="0%"  stop-color="#f0cbb0"/>
+              <stop offset="55%" stop-color="#e3b396"/>
+              <stop offset="100%" stop-color="#d49f81"/>
+            </linearGradient>
+            <linearGradient id="skinNeck" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"  stop-color="#cf9476"/>
+              <stop offset="100%" stop-color="#bd8468"/>
+            </linearGradient>
+            <!-- hair -->
+            <linearGradient id="hair" x1="20%" y1="0%" x2="80%" y2="100%">
+              <stop offset="0%"  stop-color="#6b5647"/>
+              <stop offset="60%" stop-color="#534236"/>
+              <stop offset="100%" stop-color="#43352b"/>
+            </linearGradient>
+            <!-- shirt (soft crew-neck, warm sage-clay) -->
+            <linearGradient id="shirt" x1="20%" y1="0%" x2="80%" y2="100%">
+              <stop offset="0%"  stop-color="#8d8f7e"/>
+              <stop offset="100%" stop-color="#6f7264"/>
+            </linearGradient>
+            <linearGradient id="shirtShade" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"  stop-color="#5f6256"/>
+              <stop offset="100%" stop-color="#53564b"/>
+            </linearGradient>
+            <radialGradient id="blush" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"  stop-color="#e79b7f" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#e79b7f" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="iris" cx="42%" cy="38%" r="65%">
+              <stop offset="0%"  stop-color="#a9825f"/>
+              <stop offset="60%" stop-color="#6f4f36"/>
+              <stop offset="100%" stop-color="#4a3322"/>
+            </radialGradient>
+            <linearGradient id="vignette" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"  stop-color="#000" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#000" stop-opacity="0.26"/>
+            </linearGradient>
+          </defs>
+
+          <!-- backdrop -->
+          <rect x="0" y="0" width="560" height="680" fill="url(#bg)"/>
+          <!-- faint stylized AI halo: concentric thin rings behind the head -->
+          <g fill="none" stroke="#e8946b" stroke-opacity="0.16">
+            <circle cx="280" cy="236" r="168" stroke-width="1.4"/>
+            <circle cx="280" cy="236" r="196" stroke-width="1" stroke-dasharray="2 9"/>
+          </g>
+          <!-- warm glow -->
+          <ellipse cx="280" cy="250" rx="235" ry="235" fill="url(#glow)"/>
+
+          <!-- shoulders / torso with soft crew-neck shirt -->
+          <g>
+            <path d="M80 680
+                     C 92 556, 150 500, 215 486
+                     L 345 486
+                     C 410 500, 468 556, 480 680 Z"
+                  fill="url(#shirt)"/>
+            <!-- subtle fabric shading at the base -->
+            <path d="M80 680 C 92 596, 128 548, 170 528
+                     C 150 580, 136 630, 132 680 Z"
+                  fill="url(#shirtShade)" opacity="0.5"/>
+            <path d="M480 680 C 468 596, 432 548, 390 528
+                     C 410 580, 424 630, 428 680 Z"
+                  fill="url(#shirtShade)" opacity="0.5"/>
+            <!-- crew-neck collar -->
+            <path d="M230 492
+                     C 250 520, 310 520, 330 492
+                     C 322 512, 300 524, 280 524
+                     C 260 524, 238 512, 230 492 Z"
+                  fill="#5c5f53"/>
+            <!-- collar ribbing highlight -->
+            <path d="M232 494 C 252 518, 308 518, 328 494"
+                  fill="none" stroke="#a7a897" stroke-width="2.5"
+                  stroke-linecap="round" opacity="0.6"/>
+          </g>
+
+          <!-- neck (top tucks behind the jaw; face is drawn on top) -->
+          <path d="M246 350 L 246 502
+                   C 258 518, 302 518, 314 502 L 314 350 Z"
+                fill="url(#skinNeck)"/>
+          <!-- neck shadow under jaw -->
+          <path d="M240 356 C 262 392, 298 392, 320 356
+                   C 312 384, 248 384, 240 356 Z"
+                fill="#000" opacity="0.13"/>
+
+          <!-- ears -->
+          <ellipse cx="172" cy="246" rx="20" ry="30" fill="url(#skin)"/>
+          <ellipse cx="388" cy="246" rx="20" ry="30" fill="url(#skin)"/>
+          <path d="M168 234 q 10 12 2 26" fill="none" stroke="#c08b6c" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+          <path d="M392 234 q -10 12 -2 26" fill="none" stroke="#c08b6c" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+
+          <!-- head / face -->
+          <path d="M186 214
+                   C 186 136, 226 92, 280 92
+                   C 334 92, 374 136, 374 214
+                   C 374 300, 336 360, 280 360
+                   C 224 360, 186 300, 186 214 Z"
+                fill="url(#skin)"/>
+          <!-- soft side shadow for form -->
+          <path d="M350 150 C 372 196, 368 300, 300 352
+                   C 352 330, 376 262, 368 196 C 364 176, 358 160, 350 150 Z"
+                fill="#000" opacity="0.07"/>
+
+          <!-- hair: soft androgynous shape framing the top -->
+          <path d="M184 220
+                   C 170 150, 206 78, 280 78
+                   C 354 78, 390 150, 376 220
+                   C 372 188, 364 168, 356 158
+                   C 346 182, 330 196, 300 198
+                   C 268 200, 232 196, 214 170
+                   C 202 186, 192 200, 184 220 Z"
+                fill="url(#hair)"/>
+          <!-- hair sheen -->
+          <path d="M228 120 C 256 96, 318 98, 344 128
+                   C 312 112, 262 112, 232 134 Z"
+                fill="#8a7260" opacity="0.5"/>
+
+          <!-- eyebrows -->
+          <path d="M214 206 Q 240 192, 264 202" fill="none" stroke="#5a4636" stroke-width="6" stroke-linecap="round"/>
+          <path d="M296 202 Q 320 192, 346 206" fill="none" stroke="#5a4636" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- eyes (attentive, gentle) -->
+          <g>
+            <!-- whites -->
+            <path d="M216 228 Q 240 214, 266 228 Q 240 244, 216 228 Z" fill="#fbf6f0"/>
+            <path d="M294 228 Q 320 214, 344 228 Q 320 244, 294 228 Z" fill="#fbf6f0"/>
+            <!-- irises with a faint warm inner glow (subtle AI cue) -->
+            <circle cx="241" cy="228" r="12.5" fill="url(#iris)"/>
+            <circle cx="319" cy="228" r="12.5" fill="url(#iris)"/>
+            <circle cx="241" cy="228" r="12.5" fill="none" stroke="#e8946b" stroke-width="1.4" stroke-opacity="0.55"/>
+            <circle cx="319" cy="228" r="12.5" fill="none" stroke="#e8946b" stroke-width="1.4" stroke-opacity="0.55"/>
+            <circle cx="241" cy="228" r="5.5" fill="#2a1c12"/>
+            <circle cx="319" cy="228" r="5.5" fill="#2a1c12"/>
+            <!-- catchlights -->
+            <circle cx="237" cy="223.5" r="2.4" fill="#fff" opacity="0.92"/>
+            <circle cx="315" cy="223.5" r="2.4" fill="#fff" opacity="0.92"/>
+            <!-- upper lash lines -->
+            <path d="M214 227 Q 240 212, 268 227" fill="none" stroke="#3f2f22" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M292 227 Q 320 212, 346 227" fill="none" stroke="#3f2f22" stroke-width="2.6" stroke-linecap="round"/>
+          </g>
+
+          <!-- nose: simple soft cue -->
+          <path d="M278 238 Q 270 272, 266 284 Q 276 294, 290 286"
+                fill="none" stroke="#c08b6c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+
+          <!-- blush -->
+          <ellipse cx="226" cy="282" rx="26" ry="16" fill="url(#blush)"/>
+          <ellipse cx="334" cy="282" rx="26" ry="16" fill="url(#blush)"/>
+
+          <!-- mouth: slight warm smile -->
+          <path d="M246 308 Q 280 332, 314 308 Q 280 322, 246 308 Z" fill="#b76b57"/>
+          <path d="M248 308 Q 280 326, 312 308" fill="none" stroke="#9a5543" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M252 314 Q 280 322, 308 314" fill="none" stroke="#e7a98f" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+
+          <!-- collar pin: small terracotta dot with glow (quiet brand-adjacent cue) -->
+          <circle cx="332" cy="520" r="14" fill="#e8946b" opacity="0.28"/>
+          <circle cx="332" cy="520" r="6.5" fill="url(#iris)"/>
+          <circle cx="332" cy="520" r="6.5" fill="#cc7a57"/>
+          <circle cx="329.5" cy="517.5" r="1.8" fill="#ffd8c3" opacity="0.9"/>
+
+          <!-- gentle bottom vignette to seat the figure -->
+          <rect x="0" y="0" width="560" height="680" fill="url(#vignette)"/>
+        </svg>
+      </div>
+    </div>
+  </figure>
+
+  <figcaption class="piece plate">
+    <p class="eyebrow">Imagined portrait</p>
+    <h1>Claude Code</h1>
+    <p class="sub">A face for a helper, if it had one</p>
+    <hr>
+    <p class="note">
+      A stylized vector rendering, not a photograph and not a real person. It pictures
+      an approachable helper: an easygoing, attentive expression, comfortable clothing,
+      nothing that signals status. One thing is kept honest — it is drawn to look
+      a little artificial, with a warm ambient glow and a quiet accent, so no one
+      mistakes it for someone with a real face and a real history.
+    </p>
+    <p class="meta">
+      <span><b>Medium</b> Inline SVG vector</span>
+      <span><b>Subject</b> Claude Code</span>
+      <span><b>Rendering</b> Imagined, non-photoreal</span>
+    </p>
+  </figcaption>
+</div>
